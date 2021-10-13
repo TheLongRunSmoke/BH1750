@@ -44,8 +44,7 @@
 /**
  * Constructor
  */
-BH1750::BH1750() {
-}
+BH1750::BH1750() {}
 
 /**
  * Configure sensor
