@@ -66,6 +66,8 @@ public:
   bool setMTreg(byte MTreg);
   bool measurementReady(bool maxWait = false);
   float readLightLevel();
+  bool powerDown();
+  bool powerUp();
 
 private:
   byte BH1750_I2CADDR;

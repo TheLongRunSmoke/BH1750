@@ -290,3 +290,45 @@ float BH1750::readLightLevel() {
 
   return level;
 }
+
+/**
+ * Power down device to put it in low power mode.
+ *
+ * @return true if command sent correctly.
+ */
+bool BH1750::powerDown() {
+    if (BH1750_MODE == UNCONFIGURED) {
+        Serial.println(F("[BH1750] Device is not configured!"));
+        return false;
+    }
+    uint8_t result = 1;
+    I2C->beginTransmission(BH1750_I2CADDR);
+    __wire_write((uint8_t) 0);
+    result = I2C->endTransmission();
+    if (result == 0) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Wake device from low power mode.
+ *
+ * @return true if command sent correctly.
+ */
+bool BH1750::powerUp() {
+    if (BH1750_MODE == UNCONFIGURED) {
+        Serial.println(F("[BH1750] Device is not configured!"));
+        return false;
+    }
+    uint8_t result = 1;
+    I2C->beginTransmission(BH1750_I2CADDR);
+    __wire_write((uint8_t) 0b00000001);
+    result = I2C->endTransmission();
+    if (result == 0) {
+        // Wait a few moments to wake up
+        _delay_ms(10);
+        return true;
+    }
+    return false;
+}
